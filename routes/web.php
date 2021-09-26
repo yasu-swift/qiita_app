@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,11 @@ use App\Http\Controllers\ArticleController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('articles', ArticleController::class);
+// Route::get('/', [ArticleController::class, 'index']);
+Route::resource('articles', ArticleController::class)
+->middleware('auth');
+// 書く順番大事
+// Route::redirect('/', route('articles.index'), 302);
 Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
